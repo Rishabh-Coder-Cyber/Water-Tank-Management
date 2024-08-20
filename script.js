@@ -48,11 +48,11 @@ document.getElementById('turn_on').addEventListener('click', (event) => {
     event.preventDefault(); // Prevent the form from submitting the default way
 
     // const waterLevelInput = document.getElementById('water-level-input').value;
-    const waterLevel = "on";
+    const status = "on";
 
     
         // Write data to Firebase
-        set(waterLevelRefSwitch, waterLevel)
+        set(waterLevelRefSwitch, status)
             .then(() => {
                 console.log('Water level updated successfully.');
             })
@@ -60,4 +60,33 @@ document.getElementById('turn_on').addEventListener('click', (event) => {
                 console.error('Error updating water level:', error);
             });
     
+});
+document.getElementById('turn_off').addEventListener('click', (event) => {
+    event.preventDefault(); // Prevent the form from submitting the default way
+
+    // const waterLevelInput = document.getElementById('water-level-input').value;
+    const status = "off";
+
+    
+        // Write data to Firebase
+        set(waterLevelRefSwitch, status)
+            .then(() => {
+                console.log('Water level updated successfully.');
+            })
+            .catch((error) => {
+                console.error('Error updating water level:', error);
+            });
+    
+});
+
+
+// Display Function-----------------------------------------------
+onValue(waterLevelRefSwitch, (snapshot) => {
+    const status = snapshot.val();
+
+    if (status === "on") {
+        document.getElementById("display").innerText = "Water Pump is Running";
+    } else if (status === "off") {
+        document.getElementById("display").innerText = "Water Pump is Not Running";
+    }
 });
